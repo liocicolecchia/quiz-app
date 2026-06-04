@@ -32,12 +32,12 @@ function Quiz() {
         }, 2000);
       }, 1000);
     },
-    [activeQuestionIndex],
+    [activeQuestionIndex]
   );
 
   const handleSkipAnswer = useCallback(
     () => handleSelectAnswer(null),
-    [handleSelectAnswer],
+    [handleSelectAnswer]
   );
 
   if (quizIsComplete) {
@@ -63,9 +63,20 @@ function Quiz() {
         <h2>{QUESTIONS[activeQuestionIndex].text}</h2>
         <ul id="answers">
           {shuffledAnswers.map((answer) => {
+            const isSelected = userAnswers[userAnswers.length - 1] === answer;
+            let cssClass = "";
+
+            if (answerState === "answered" && isSelected) {
+              cssClass = "selected";
+            }
+
+            if ((answerState === "correct" || answerState === "wrong") && isSelected) {
+              cssClass = answerState;
+            }
+
             return (
               <li key={answer} className="answer">
-                <button onClick={() => handleSelectAnswer(answer)}>
+                <button onClick={() => handleSelectAnswer(answer)} className={cssClass}>
                   {answer}
                 </button>
               </li>
