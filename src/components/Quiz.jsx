@@ -8,7 +8,8 @@ function Quiz() {
   const [answerState, setAnswerState] = useState("");
   const [userAnswers, setUserAnswers] = useState([]);
 
-  const activeQuestionIndex = userAnswers.length;
+  const activeQuestionIndex =
+    answerState === "" ? userAnswers.length : userAnswers.length - 1;
 
   const quizIsComplete = activeQuestionIndex === QUESTIONS.length;
 
@@ -25,6 +26,10 @@ function Quiz() {
         } else {
           setAnswerState("wrong");
         }
+
+        setTimeout(() => {
+          setAnswerState("");
+        }, 2000);
       }, 1000);
     },
     [activeQuestionIndex],
